@@ -71,7 +71,14 @@
             };
 
             workWithList.print();
-            workWithList.highThan(taskList);
+            
+            var higherList = workWithList.highThan(taskList);
+
+            foreach (var higher in higherList)
+            {
+                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  {higher.quantity}\t\t|  ");
+            }
+
             workWithList.lowerThan(taskList);
 
 
