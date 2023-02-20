@@ -28,10 +28,22 @@ namespace LinqToList
         }
 
 
-        public static void print()
+        public static void print(List<FinalBebra> higherList, List<FinalBebra> LowerList)
         {
             Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
             Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
+
+            foreach (var higher in higherList)
+            {
+                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  " +
+                    $"{higher.quantity}\t\t|  {higher.cumulative_total}");
+            }
+            foreach (var lower in LowerList)
+            {
+                Console.WriteLine($"{LowerList.IndexOf(lower)}\t|  {lower.item}\t|  " +
+                    $"{lower.quantity}\t\t|  {lower.cumulative_total}");
+            }
+
 
         }
 

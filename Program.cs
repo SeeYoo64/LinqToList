@@ -2,35 +2,9 @@
 {
     class Program
     {
-        private static readonly string connectionString = "Data Source=HOME-PC;Initial Catalog=ADO;Integrated " +
-                "Security=True;Encrypt=True;TrustServerCertificate=True";
-
 
         static async Task Main(string[] args)
         {
-
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    await connection.OpenAsync();   // открываем подключение
-
-            //    SqlCommand command = new SqlCommand();
-            //    // определяем выполняемую команду
-            //    command.CommandText = "ALTER TABLE " +
-            //                          "Task DROP COLUMN IF EXISTS cumulative_total;";
-            //    // определяем используемое подключение
-            //    command.Connection = connection;
-            //    // выполняем команду
-            //    await command.ExecuteNonQueryAsync();
-
-            //    command.CommandText = "ALTER TABLE " +
-            //                          "Task ADD cumulative_total VARCHAR(20) NULL;";
-
-            //    command.Connection = connection;
-
-            //    await command.ExecuteNonQueryAsync();
-            //    Console.WriteLine("Table cumulative_total Added");
-            //}
-
 
 
             var taskList = new List<Bebra>()
@@ -70,27 +44,15 @@
                 new Bebra("97/30", 10) , // 33
             };
 
-            workWithList.print();
-            
-            var higherList = workWithList.highThan(taskList);
 
-            foreach (var higher in higherList)
-            {
-                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  " +
-                    $"{higher.quantity}\t\t|  {higher.cumulative_total}");
-            }
+            var higherList = workWithList.highThan(taskList);
 
             var LowerList = workWithList.lowerThan(taskList);
 
-            foreach (var lower in LowerList)
-            {
-                Console.WriteLine($"{LowerList.IndexOf(lower)}\t|  {lower.item}\t|  " +
-                    $"{lower.quantity}\t\t|  {lower.cumulative_total}");
-            }
+            workWithList.print(higherList, LowerList);
+            
 
             Console.Read();
         }
-
-
     }
 }
