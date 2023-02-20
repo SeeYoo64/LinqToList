@@ -12,7 +12,7 @@ namespace LinqToList
         private static IOrderedEnumerable<Bebra> ConditionHigher(List<Bebra> taskList)
         {
             var selected = from p in taskList
-                           where p.quantity > 10 && p.quantity < 160
+                           where p.quantity >= 10 && p.quantity < 160
                            orderby p.quantity descending
                            select p;
             return selected;
@@ -36,11 +36,11 @@ namespace LinqToList
         }
 
 
-        public static List<Bebra> highThan(List<Bebra> taskList)
+        public static List<FinalBebra> highThan(List<Bebra> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
-            var finalHigherList = new List<Bebra>();
+            var finalHigherList = new List<FinalBebra>();
             IOrderedEnumerable<Bebra> selected = ConditionHigher(taskList);
 
             foreach (var item in selected)
@@ -48,14 +48,16 @@ namespace LinqToList
                 cumulative_total += item.quantity;
 
                 if (cumulative_total <= 160)
-                    finalHigherList.Add(item);
+                    finalHigherList.Add(new FinalBebra(item.item, item.quantity, cumulative_total));
+                
+                    
                 else
                 {
                     counter++;
                     if (counter == 1)
                     {
                         cumulative_total -= item.quantity;
-                        finalHigherList.Add(item);
+                        finalHigherList.Add(new FinalBebra(item.item, 160 - cumulative_total, 160));
                         counter++;
                     }
                 }
@@ -65,36 +67,27 @@ namespace LinqToList
             return finalHigherList;
         }
 
-        public static List<int> cumuluativeTotalHighList()
-        {
-            var finalCumulativeTotalsHigherList = new List<int>();
-
-
-            return finalCumulativeTotalsHigherList;
-        }
-
-
-        public static List<Bebra> lowerThan(List<Bebra> taskList)
+        public static List<FinalBebra> lowerThan(List<Bebra> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
-            var finalLowerList = new List<Bebra>();
+            var finalLowerList = new List<FinalBebra>();
             IOrderedEnumerable<Bebra> selected = ConditionLower(taskList);
 
             foreach (var item in selected)
             {
                 cumulative_total += item.quantity;
 
-                if (cumulative_total <= 40) 
-                    finalLowerList.Add(item);
-                
+                if (cumulative_total <= 40)
+                    finalLowerList.Add(new FinalBebra(item.item, item.quantity, cumulative_total));
+
                 else
                 {
                     counter++;
                     if (counter == 1)
                     {
                         cumulative_total -= item.quantity;
-                        finalLowerList.Add(item);
+                        finalLowerList.Add(new FinalBebra(item.item, 40 - cumulative_total, 40));
                         counter++;
                     }
                 }

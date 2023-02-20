@@ -76,12 +76,17 @@
 
             foreach (var higher in higherList)
             {
-                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  {higher.quantity}\t\t|  ");
+                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  " +
+                    $"{higher.quantity}\t\t|  {higher.cumulative_total}");
             }
 
-            workWithList.lowerThan(taskList);
+            var LowerList = workWithList.lowerThan(taskList);
 
-
+            foreach (var lower in LowerList)
+            {
+                Console.WriteLine($"{LowerList.IndexOf(lower)}\t|  {lower.item}\t|  " +
+                    $"{lower.quantity}\t\t|  {lower.cumulative_total}");
+            }
 
             Console.Read();
         }
