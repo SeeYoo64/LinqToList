@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LinqToList.Classes
 {
-    public class FinalBebra : Bebra
+    public class finalList : sourceList
     {
         public int cumulative_total;
-        public FinalBebra(string item, int quantity, int cumulative_total) : base(item, quantity)
+        public finalList(string item, int quantity, int cumulative_total) : base(item, quantity)
         {
             this.cumulative_total = cumulative_total;
         }

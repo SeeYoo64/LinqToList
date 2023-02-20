@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LinqToList.Classes
 {
-    public class Bebra
+    public class sourceList
     {
         public string item { get; set; }
         public int quantity { get; set; }
-        public Bebra(string item, int quantity)
+        public sourceList(string item, int quantity)
         {
             this.item = item;
             this.quantity = quantity;
