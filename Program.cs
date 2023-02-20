@@ -1,11 +1,12 @@
-﻿namespace LinqToList
+﻿using LinqToList.Classes;
+
+namespace LinqToList
 {
     class Program
     {
 
         static async Task Main(string[] args)
         {
-
 
             var taskList = new List<Bebra>()
             {
