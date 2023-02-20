@@ -10,7 +10,7 @@ namespace LinqToList.Classes
 {
     public class workWithList : IBinder
     {
-        public static List<sourceList> bind()
+        public List<sourceList> bind()
         {
             var taskList = new List<sourceList>()
             {

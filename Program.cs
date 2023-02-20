@@ -7,8 +7,9 @@ namespace LinqToList
 
         static async Task Main(string[] args)
         {
+            workWithList sad = new workWithList();
 
-            var taskList = workWithList.bind();
+            var taskList = sad.bind();
 
             var higherList = workWithList.highThan(taskList);
 
