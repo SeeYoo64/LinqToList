@@ -1,57 +1,43 @@
-﻿using System;
+﻿using LinqToList.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LinqToList.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace LinqToList.Classes
 {
-    public class workWithList : work, IBinder 
+    public class workWithBaseData : IBinder
     {
+        private static readonly string connectionString = "Data Source=HOME-PC;Initial Catalog=Linq;Integrated " +
+        "Security=True;Encrypt=True;TrustServerCertificate=True";
+
         public List<sourceList> bind()
         {
-            var taskList = new List<sourceList>()
+            string sqlExpression = "Select * FROM Task";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                new sourceList("139/30", 10),
-                new sourceList("167/20", 10),
-                new sourceList("167/30", 15),
-                new sourceList("23/30", 64),
-                new sourceList("232/25", 49), // 5
-                new sourceList("236/20", 68),
-                new sourceList("236/30", 32),
-                new sourceList("237/30", 54),
-                new sourceList("238/30", 52),
-                new sourceList("241/20", 44), // 10 (9)
-                new sourceList("241/30", 34),
-                new sourceList("241/40", 8),
-                new sourceList("25/30", 6) ,
-                new sourceList("251/30", 6) ,
-                new sourceList("254/30", 10) , // 15
-                new sourceList("270/30", 6) ,
-                new sourceList("33/20", 6) ,
-                new sourceList("342/40", 6) ,
-                new sourceList("35/20", 1) ,
-                new sourceList("36/20", 2) , // 20
-                new sourceList("38/20", 5) ,
-                new sourceList("39/30", 4) ,
-                new sourceList("390/30", 4) ,
-                new sourceList("390/40", 50) ,
-                new sourceList("42/30", 22) , // 25
-                new sourceList("44/30", 62) ,
-                new sourceList("45/30", 6) ,
-                new sourceList("46/30", 14) ,
-                new sourceList("54/25", 66) ,
-                new sourceList("59/20", 52),  // 30
-                new sourceList("68/30", 1) ,
-                new sourceList("95/30", 48),
-                new sourceList("97/30", 10) , // 33
-            };
-            return taskList;
+                connection.Open();   // открываем подключение
+
+                SqlCommand command = new SqlCommand(sqlExpression, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                List<sourceList> dataBaseListSource = new List<sourceList>();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataBaseListSource.Add(new sourceList((string)reader.GetValue(0), (int)reader.GetValue(1)));
+                    }
+
+                }
+                return dataBaseListSource;
+            }
         }
 
-        public override IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
+        private static IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
         {
             var selected = from p in taskList
                            where p.quantity >= 10 && p.quantity < 160
@@ -60,7 +46,7 @@ namespace LinqToList.Classes
             return selected;
         }
 
-        public override IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
+        private static IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
         {
             var selected = from p in taskList
                            where p.quantity < 10
@@ -70,7 +56,7 @@ namespace LinqToList.Classes
         }
 
 
-        public override void print(List<finalList> higherList, List<finalList> LowerList)
+        public static void print(List<finalList> higherList, List<finalList> LowerList)
         {
             Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
             Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
@@ -90,7 +76,7 @@ namespace LinqToList.Classes
         }
 
 
-        public override List<finalList> highThan(List<sourceList> taskList)
+        public static List<finalList> highThan(List<sourceList> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
@@ -106,8 +92,7 @@ namespace LinqToList.Classes
 
 
                 else if (cumulative_total == 160) continue;
-                else
-                {
+                else { 
                     counter++;
                     if (counter == 1)
                     {
@@ -122,7 +107,7 @@ namespace LinqToList.Classes
             return finalHigherList;
         }
 
-        public override List<finalList> lowerThan(List<sourceList> taskList)
+        public static List<finalList> lowerThan(List<sourceList> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
@@ -136,7 +121,7 @@ namespace LinqToList.Classes
                 if (cumulative_total <= 40)
                     finalLowerList.Add(new finalList(item.item, item.quantity, cumulative_total));
 
-                else if (cumulative_total >= 40) counter++;
+                else if (cumulative_total >= 160) counter++;
                 if (counter == 1)
                 {
                     cumulative_total -= item.quantity;
@@ -149,5 +134,6 @@ namespace LinqToList.Classes
             return finalLowerList;
         }
 
+        }
+
     }
-}
