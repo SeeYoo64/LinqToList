@@ -9,30 +9,30 @@ namespace LinqToList
 
         static void Main(string[] args)
         {
-            workWithBaseData bsed = new workWithBaseData();
+            workWithBaseData DataBase = new workWithBaseData();
 
             Console.WriteLine("============== DATA BASE ==============");
 
-            var taskListBaseData = bsed.bind();
+            var taskListBaseData = DataBase.bind();
 
-            var higherListBaseData = workWithBaseData.highThan(taskListBaseData);
+            var higherListBaseData = DataBase.highThan(taskListBaseData);
 
-            var LowerListBaseData = workWithBaseData.lowerThan(taskListBaseData);
+            var LowerListBaseData = DataBase.lowerThan(taskListBaseData);
 
-            workWithBaseData.print(higherListBaseData, LowerListBaseData);
+            DataBase.print(higherListBaseData, LowerListBaseData);
 
 
             Console.WriteLine("\n============== LIST ==============\n");
 
-            workWithList sad = new workWithList();
+            workWithList ListBase = new workWithList();
 
-            var taskList = sad.bind();
+            var taskList = ListBase.bind();
 
-            var higherList = sad.highThan(taskList);
+            var higherList = ListBase.highThan(taskList);
 
-            var LowerList = sad.lowerThan(taskList);
+            var LowerList = ListBase.lowerThan(taskList);
 
-            sad.print(higherList, LowerList);
+            ListBase.print(higherList, LowerList);
 
 
             Console.Read();

@@ -101,7 +101,7 @@ namespace LinqToList.Classes
             {
                 cumulative_total += item.quantity;
 
-                if (cumulative_total <= 160)
+                if (cumulative_total < 160)
                     finalHigherList.Add(new finalList(item.item, item.quantity, cumulative_total));
 
 
@@ -133,10 +133,10 @@ namespace LinqToList.Classes
             {
                 cumulative_total += item.quantity;
 
-                if (cumulative_total <= 40)
+                if (cumulative_total < 40)
                     finalLowerList.Add(new finalList(item.item, item.quantity, cumulative_total));
 
-                else if (cumulative_total >= 40) counter++;
+                else if (cumulative_total > 40) counter++;
                 if (counter == 1)
                 {
                     cumulative_total -= item.quantity;

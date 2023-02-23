@@ -8,7 +8,7 @@ using Microsoft.Data.SqlClient;
 
 namespace LinqToList.Classes
 {
-    public class workWithBaseData : IBinder
+    public class workWithBaseData : work, IBinder
     {
         private static readonly string connectionString = "Data Source=HOME-PC;Initial Catalog=Linq;Integrated " +
         "Security=True;Encrypt=True;TrustServerCertificate=True";
@@ -37,7 +37,7 @@ namespace LinqToList.Classes
             }
         }
 
-        private static IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
+        public override IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
         {
             var selected = from p in taskList
                            where p.quantity >= 10 && p.quantity < 160
@@ -46,7 +46,7 @@ namespace LinqToList.Classes
             return selected;
         }
 
-        private static IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
+        public override IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
         {
             var selected = from p in taskList
                            where p.quantity < 10
@@ -56,7 +56,7 @@ namespace LinqToList.Classes
         }
 
 
-        public static void print(List<finalList> higherList, List<finalList> LowerList)
+        public override void print(List<finalList> higherList, List<finalList> LowerList)
         {
             Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
             Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
@@ -76,7 +76,7 @@ namespace LinqToList.Classes
         }
 
 
-        public static List<finalList> highThan(List<sourceList> taskList)
+        public override List<finalList> highThan(List<sourceList> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
@@ -87,12 +87,13 @@ namespace LinqToList.Classes
             {
                 cumulative_total += item.quantity;
 
-                if (cumulative_total <= 160)
+                if (cumulative_total < 160)
                     finalHigherList.Add(new finalList(item.item, item.quantity, cumulative_total));
 
 
                 else if (cumulative_total == 160) continue;
-                else { 
+                else
+                {
                     counter++;
                     if (counter == 1)
                     {
@@ -107,7 +108,7 @@ namespace LinqToList.Classes
             return finalHigherList;
         }
 
-        public static List<finalList> lowerThan(List<sourceList> taskList)
+        public override List<finalList> lowerThan(List<sourceList> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
@@ -118,10 +119,10 @@ namespace LinqToList.Classes
             {
                 cumulative_total += item.quantity;
 
-                if (cumulative_total <= 40)
+                if (cumulative_total < 40)
                     finalLowerList.Add(new finalList(item.item, item.quantity, cumulative_total));
 
-                else if (cumulative_total >= 160) counter++;
+                else if (cumulative_total > 40) counter++;
                 if (counter == 1)
                 {
                     cumulative_total -= item.quantity;
@@ -134,6 +135,6 @@ namespace LinqToList.Classes
             return finalLowerList;
         }
 
-        }
-
     }
+
+}
