@@ -14,7 +14,7 @@ namespace LinqToList
 
             baseBinder BaseBind = new baseBinder();
 
-            workWithBaseData DataBase = new workWithBaseData(BaseBind.bind());
+            workWithList DataBase = new workWithList(BaseBind.bind());
 
             DataBase.print();
 
@@ -25,7 +25,6 @@ namespace LinqToList
             listBinder ListBind = new listBinder();
 
             workWithList ListBase = new workWithList(ListBind.bind());
-
 
             ListBase.print();
 

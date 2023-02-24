@@ -57,7 +57,6 @@ namespace LinqToList.Classes
 
         }
 
-
         public List<finalList> highThan()
         {
             int counter = 0;
