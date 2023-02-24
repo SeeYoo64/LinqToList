@@ -1,4 +1,4 @@
-﻿using LinqToList.Classes;
+﻿using LinqToList.Classes.Lists;
 
 namespace LinqToList.Interfaces
 {

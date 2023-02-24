@@ -24,15 +24,13 @@ namespace LinqToList
 
             Console.WriteLine("\n============== LIST ==============\n");
 
-            workWithList ListBase = new workWithList();
 
-            var taskList = ListBase.bind();
+            listBinder ListBind = new listBinder();
 
-            var higherList = ListBase.highThan(taskList);
+            workWithList ListBase = new workWithList(ListBind.bind());
 
-            var LowerList = ListBase.lowerThan(taskList);
 
-            ListBase.print(higherList, LowerList);
+            ListBase.print(ListBase.highThan(), ListBase.lowerThan());
 
 
             Console.Read();
@@ -40,6 +38,8 @@ namespace LinqToList
         }
     }
 }
+
+//1. Сделать отдельный класс для Биндера + Принт, потому что не вписываются в основной фнкционал.
 
 /*
  * 

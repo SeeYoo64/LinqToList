@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using LinqToList.Classes.Lists;
 
 namespace LinqToList.Classes
 {
-    public class workWithBaseData : work, IBinder
+    public class workWithBaseData :  workOther<finalList>
     {
         private static readonly string connectionString = "Data Source=HOME-PC;Initial Catalog=Linq;Integrated " +
         "Security=True;Encrypt=True;TrustServerCertificate=True";
@@ -37,7 +38,7 @@ namespace LinqToList.Classes
             }
         }
 
-        public override IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
+        public IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
         {
             var selected = from p in taskList
                            where p.quantity >= 10 && p.quantity < 160
@@ -46,7 +47,7 @@ namespace LinqToList.Classes
             return selected;
         }
 
-        public override IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
+        public IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
         {
             var selected = from p in taskList
                            where p.quantity < 10
@@ -56,7 +57,7 @@ namespace LinqToList.Classes
         }
 
 
-        public override void print(List<finalList> higherList, List<finalList> LowerList)
+        public void print(List<finalList> higherList, List<finalList> LowerList)
         {
             Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
             Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
@@ -76,7 +77,7 @@ namespace LinqToList.Classes
         }
 
 
-        public override List<finalList> highThan(List<sourceList> taskList)
+        public List<finalList> highThan(List<sourceList> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
@@ -108,7 +109,7 @@ namespace LinqToList.Classes
             return finalHigherList;
         }
 
-        public override List<finalList> lowerThan(List<sourceList> taskList)
+        public List<finalList> lowerThan(List<sourceList> taskList)
         {
             int counter = 0;
             int cumulative_total = 0;
