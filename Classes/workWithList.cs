@@ -40,17 +40,17 @@ namespace LinqToList.Classes
 
         public void print()
         {
-            Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
-            Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
+            Console.WriteLine("|  Item \t|  Quantity \t|  Cumulative_total");
+            Console.WriteLine("|  -----\t|  ---------\t|  ----------------");
 
             foreach (var higher in highThan())
             {
-                Console.WriteLine($"{highThan().IndexOf(higher)}\t|  {higher.item}\t|  " +
+                Console.WriteLine($"|  {higher.item}\t|  " +
                     $"{higher.quantity}\t\t|  {higher.cumulative_total}");
             }
             foreach (var lower in lowerThan())
             {
-                Console.WriteLine($"{lowerThan().IndexOf(lower)}\t|  {lower.item}\t|  " +
+                Console.WriteLine($"|  {lower.item}\t|  " +
                     $"{lower.quantity}\t\t|  {lower.cumulative_total}");
             }
 
