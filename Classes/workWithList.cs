@@ -38,19 +38,19 @@ namespace LinqToList.Classes
         }
 
 
-        public void print(List<finalList> higherList, List<finalList> LowerList)
+        public void print()
         {
             Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
             Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
 
-            foreach (var higher in higherList)
+            foreach (var higher in highThan())
             {
-                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  " +
+                Console.WriteLine($"{highThan().IndexOf(higher)}\t|  {higher.item}\t|  " +
                     $"{higher.quantity}\t\t|  {higher.cumulative_total}");
             }
-            foreach (var lower in LowerList)
+            foreach (var lower in lowerThan())
             {
-                Console.WriteLine($"{LowerList.IndexOf(lower)}\t|  {lower.item}\t|  " +
+                Console.WriteLine($"{lowerThan().IndexOf(lower)}\t|  {lower.item}\t|  " +
                     $"{lower.quantity}\t\t|  {lower.cumulative_total}");
             }
 

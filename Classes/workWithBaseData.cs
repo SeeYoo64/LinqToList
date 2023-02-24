@@ -11,34 +11,17 @@ namespace LinqToList.Classes
 {
     public class workWithBaseData :  workOther<finalList>
     {
-        private static readonly string connectionString = "Data Source=HOME-PC;Initial Catalog=Linq;Integrated " +
-        "Security=True;Encrypt=True;TrustServerCertificate=True";
 
-        public List<sourceList> bind()
+        private List<sourceList> taskList = new List<sourceList>();
+
+        public workWithBaseData(List<sourceList> taskList)
         {
-            string sqlExpression = "Select * FROM Task";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();   // открываем подключение
-
-                SqlCommand command = new SqlCommand(sqlExpression, connection);
-                SqlDataReader reader = command.ExecuteReader();
-                List<sourceList> dataBaseListSource = new List<sourceList>();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        dataBaseListSource.Add(new sourceList((string)reader.GetValue(0), (int)reader.GetValue(1)));
-                    }
-
-                }
-                return dataBaseListSource;
-            }
+            this.taskList = taskList;
         }
 
-        public IOrderedEnumerable<sourceList> ConditionHigher(List<sourceList> taskList)
+
+
+        public IOrderedEnumerable<sourceList> ConditionHigher()
         {
             var selected = from p in taskList
                            where p.quantity >= 10 && p.quantity < 160
@@ -47,7 +30,7 @@ namespace LinqToList.Classes
             return selected;
         }
 
-        public IOrderedEnumerable<sourceList> ConditionLower(List<sourceList> taskList)
+        public IOrderedEnumerable<sourceList> ConditionLower()
         {
             var selected = from p in taskList
                            where p.quantity < 10
@@ -57,32 +40,30 @@ namespace LinqToList.Classes
         }
 
 
-        public void print(List<finalList> higherList, List<finalList> LowerList)
+        public void print()
         {
             Console.WriteLine("ID   \t|  Item \t|  Quantity \t|  Cumulative_total");
             Console.WriteLine("-----\t|  -----\t|  ---------\t|  ----------------");
 
-            foreach (var higher in higherList)
+            foreach (var higher in highThan())
             {
-                Console.WriteLine($"{higherList.IndexOf(higher)}\t|  {higher.item}\t|  " +
+                Console.WriteLine($"{highThan().IndexOf(higher)}\t|  {higher.item}\t|  " +
                     $"{higher.quantity}\t\t|  {higher.cumulative_total}");
             }
-            foreach (var lower in LowerList)
+            foreach (var lower in lowerThan())
             {
-                Console.WriteLine($"{LowerList.IndexOf(lower)}\t|  {lower.item}\t|  " +
+                Console.WriteLine($"{lowerThan().IndexOf(lower)}\t|  {lower.item}\t|  " +
                     $"{lower.quantity}\t\t|  {lower.cumulative_total}");
             }
 
-
         }
 
-
-        public List<finalList> highThan(List<sourceList> taskList)
+        public List<finalList> highThan()
         {
             int counter = 0;
             int cumulative_total = 0;
             var finalHigherList = new List<finalList>();
-            IOrderedEnumerable<sourceList> selected = ConditionHigher(taskList);
+            IOrderedEnumerable<sourceList> selected = ConditionHigher();
 
             foreach (var item in selected)
             {
@@ -109,12 +90,12 @@ namespace LinqToList.Classes
             return finalHigherList;
         }
 
-        public List<finalList> lowerThan(List<sourceList> taskList)
+        public List<finalList> lowerThan()
         {
             int counter = 0;
             int cumulative_total = 0;
             var finalLowerList = new List<finalList>();
-            IOrderedEnumerable<sourceList> selected = ConditionLower(taskList);
+            IOrderedEnumerable<sourceList> selected = ConditionLower();
 
             foreach (var item in selected)
             {

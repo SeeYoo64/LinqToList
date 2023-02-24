@@ -9,17 +9,14 @@ namespace LinqToList
 
         static void Main(string[] args)
         {
-            workWithBaseData DataBase = new workWithBaseData();
 
             Console.WriteLine("============== DATA BASE ==============");
 
-            var taskListBaseData = DataBase.bind();
+            baseBinder BaseBind = new baseBinder();
 
-            var higherListBaseData = DataBase.highThan(taskListBaseData);
+            workWithBaseData DataBase = new workWithBaseData(BaseBind.bind());
 
-            var LowerListBaseData = DataBase.lowerThan(taskListBaseData);
-
-            DataBase.print(higherListBaseData, LowerListBaseData);
+            DataBase.print();
 
 
             Console.WriteLine("\n============== LIST ==============\n");
@@ -30,7 +27,7 @@ namespace LinqToList
             workWithList ListBase = new workWithList(ListBind.bind());
 
 
-            ListBase.print(ListBase.highThan(), ListBase.lowerThan());
+            ListBase.print();
 
 
             Console.Read();

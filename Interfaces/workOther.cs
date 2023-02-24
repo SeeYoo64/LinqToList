@@ -9,6 +9,6 @@ namespace LinqToList.Interfaces
 {
     public interface workOther<T>
     {
-        public void print(List<T> higherList, List<T> LowerList);
+        public void print();
     }
 }
